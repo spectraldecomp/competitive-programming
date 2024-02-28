@@ -1,3 +1,4 @@
+# https://open.kattis.com/problems/abcstring
 sentence = input()
 map = {'A':0, 'B':0, 'C':0}
 number = 0
