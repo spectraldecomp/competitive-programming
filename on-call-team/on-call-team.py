@@ -2,22 +2,33 @@ import math
 import itertools
 
 def solution(arr, n, m):
+    memo = memoize(arr, n, m)
+    # Try all possible subsets of tasks
     for i in range(1, m+1):
         for subset in itertools.combinations(range(m), i):
             size = len(subset)
-            # Check neighbors of subset corresponding to bit_string. 
-            # Use Hall's theorem to check for perfect matching
-            if not valid_neighbors(arr, subset, n, size):
+            # Use Hall's Marriage theorem to check for perfect matching
+            if not valid_neighbors(memo, subset, size):
                 return print(size-1)
-    print(m)
-def valid_neighbors(arr, checked_elements, n, size):
+    return print(m)
+    
+def memoize(arr, n, m):
+    # Create a memoization table to store the number of neighbors for each element
+    memo = [set() for _ in range(m)]
+    for i in range(m):
+        for j in range(n):
+            if arr[i][j] == "1":
+                memo[i].add(j)
+    return memo
+
+def valid_neighbors(memo, checked_elements, size):
     # Check if the checked elements have at least size neighbors
-    workers = [False]*n
-    for e in checked_elements:
-        for i in range(n):
-            if arr[e][i] == "1":
-                workers[i] = True
-    return sum(workers) >= size
+    neighbors = set()
+    for i in checked_elements:
+        neighbors = neighbors.union(memo[i])
+        if len(neighbors) >= size:
+            return True
+    return len(neighbors) >= size
 
 n, m = map(int, input().split())
 arr= []
