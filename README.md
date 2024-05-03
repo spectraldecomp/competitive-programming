@@ -1,2 +1,2 @@
 # competitive-programming
-Collections of problems solved in competitive programming competitions (specifically ICPC).
+Collections of problems solved for competitive programming class / ICPC / for fun.
